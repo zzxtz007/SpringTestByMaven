@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="	http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+    <bean id="hello" class="top.haha233.demo.HelloSpring">
+        <property name="who" value="草泥马"/>
+    </bean>
+    <bean id="zhang" class="top.haha233.demo.Role">
+        <property name="name" value="张嘎"/>
+        <property name="say" value="三天不打鬼子,手都痒痒"/>
+    </bean>
+    <bean id="rod" class="top.haha233.demo.Role">
+        <property name="name" value="Rod"/>
+        <property name="say" value="世界上有10种人，认识二进制的和不认识二进制的"/>
+    </bean>
+    <!-- 定义彩色墨盒Bean，id是colorInk -->
+    <bean id="colorInk" class="top.haha233.printer.ink.ColorInk"/>
+    <!-- 定义灰色墨盒Bean，id是greyInk -->
+    <bean id="greyInk" class="top.haha233.printer.ink.GrayInk"/>
+    <!-- 定义A4纸张Bean，id是a4Paper -->
+    <!-- 通过setCharPerLine()方法为charPerLine属性注入每行字符数 -->
+    <!-- 通过setLinePerPage()方法为linePerPage属性注入每页行数 -->
+    <bean id="a4Paper" class="top.haha233.printer.paper.TestPaper">
+        <property name="charPerLine" value="10"/>
+        <property name="linePerPage" value="8"/>
+    </bean>
+    <!-- 定义B5纸张Bean，id是b5Paper -->
+    <bean id="b5Paper" class="top.haha233.printer.paper.TestPaper">
+        <property name="charPerLine" value="8"/>
+        <property name="linePerPage" value="6"/>
+    </bean>
+    <bean id="printer" class="top.haha233.printer.Printer">
+        <property name="ink" ref="colorInk"/>
+        <property name="paper" ref="a4Paper"/>
+    </bean>
+    <bean id="xxx" class="top.haha233.demo.Collection">
+        <property name="listStr">
+            <list>
+                <value>fuck</value>
+                <value>fuck</value>
+                <value>fuck</value>
+                <value>fuck</value>
+                <value>fuck</value>
+            </list>
+        </property>
+        <property name="aryStr">
+            <list>
+                <value>aaaa</value>
+                <value>aaaa</value>
+                <value>aaaa</value>
+                <value>aaaa</value>
+            </list>
+        </property>
+        <property name="listRole">
+            <list>
+                <bean class="top.haha233.demo.Role">
+                    <property name="name">
+                        <value>fuck</value>
+                    </property>
+                    <property name="say">
+                        <value>我aaaasdasds</value>
+                    </property>
+                </bean>
+                <ref bean="rod"></ref>
+                <ref bean="zhang"></ref>
+            </list>
+        </property>
+    </bean>
+</beans>

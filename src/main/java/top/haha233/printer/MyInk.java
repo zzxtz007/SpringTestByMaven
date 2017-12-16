@@ -1,6 +1,6 @@
 package top.haha233.printer;
 
-public interface Ink {
+public interface MyInk {
 	/**
 	 * 返回打印颜色
 	 * @param r

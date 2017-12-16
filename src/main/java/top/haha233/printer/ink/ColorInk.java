@@ -1,4 +1,4 @@
-package top.haha233.printer;
+package top.haha233.printer.ink;
 
 import top.haha233.printer.MyInk;
 import java.awt.*;

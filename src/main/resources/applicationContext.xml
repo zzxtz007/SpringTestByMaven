@@ -1,8 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="	http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--<context:component-scan base-package="top.haha233"/>-->
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+    <!--1 IoC 创建对象-->
+    <!--<bean id="dao" class="top.haha233.dal.impl.UserDaoImpl"/>-->
+    <!--创建UserServiceImpl类的对象，需要注入UserDaoImpl对象
+        注入方式有三种
+    -->
+    <!--方式一 设值注入 设置注入-->
+    <!--<bean id="UserService" class="top.haha233.service.impl.UserServiceImpl">-->
+    <!--<property name="us" ref="dao"/>-->
+    <!--</bean>-->
+    <!--方式二 构造注入 调用类的构造方法 -->
+    <!--<bean id="us" class="top.haha233.service.impl.UserServiceImpl">-->
+        <!--<constructor-arg>-->
+            <!--<ref bean="dao"/>-->
+        <!--</constructor-arg>-->
+    <!--</bean>-->
+    <!--方式三：p命名控制方式注入-->
+    <!--<bean id="user" class="top.haha233.model.User" p:id="xuleiyi" p:password="123456"-->
+          <!--p:username="xupeiyi"/>-->
+    <!--创建AOP所使用的对象-->
+    <bean id="theLogger" class="top.haha233.aop.Fuckyou"/>
+    <bean id="theError" class="top.haha233.aop.Error"/>
+    <bean id="theAround" class="top.haha233.aop.AroundLogger"/>
+    <!--2 AOP 面向切面编程-->
+    <aop:aspectj-autoproxy/>
+    <aop:config>
+        <!--定义切入点：对哪个方法进行增强处理-->
+        <!--方式一-->
+        <!--id 表示切入点的名字-->
+        <aop:pointcut id="userpoint" expression="execution(* top.haha233.service..*.*(..))"/>
+        <!--配置增强方法，具体的切面内容-->
+        <aop:aspect ref="theLogger">
+            <aop:before method="before" pointcut-ref="userpoint"/>
+            <aop:after method="after" pointcut-ref="userpoint"/>
+        </aop:aspect>
+        <aop:aspect ref="theError">
+            <aop:after-returning method="aftterReturn" pointcut-ref="userpoint" returning="o"/>
+            <aop:after-throwing method="afterThrowing" pointcut-ref="userpoint"
+                                throwing="throwable"/>
+        </aop:aspect>
+        <aop:aspect ref="theAround">
+            <aop:around method="round" pointcut-ref="userpoint"/>
+        </aop:aspect>
+    </aop:config>
+
+
     <bean id="hello" class="top.haha233.demo.HelloSpring">
         <property name="who" value="草泥马"/>
     </bean>
